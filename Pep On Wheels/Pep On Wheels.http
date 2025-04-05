@@ -1,0 +1,6 @@
+@Pep_On_Wheels_HostAddress = http://localhost:5063
+
+GET {{Pep_On_Wheels_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
