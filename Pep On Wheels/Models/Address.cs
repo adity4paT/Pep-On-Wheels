@@ -28,6 +28,6 @@ namespace Pep_On_Wheels.Models
         public int UserId { get; set; }
 
         [ForeignKey("UserId")]
-        public User User { get; set; } = new User();
+        public User User { get; set; }
     }
 }
