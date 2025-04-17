@@ -1,8 +1,8 @@
 ﻿namespace Pep_On_Wheels.DTO.Order
 {
-    public class OrderItemDeatailDTO
+    public class OrderItemUpdateDTO
     {
-        public string ProductName { get; set; }
+        public int Id { get; set; } // To identify the item
         public int Quantity { get; set; }
         public decimal Price { get; set; }
     }

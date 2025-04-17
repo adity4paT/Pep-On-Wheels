@@ -4,6 +4,6 @@
     {
         public int Id { get; set; }
         public int UserId { get; set; }
-        public List<CartItemDetailDTO> CartItems { get; set; }
+        public List<CartItemReadDTO> CartItems { get; set; }
     }
 }
