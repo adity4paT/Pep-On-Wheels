@@ -5,7 +5,7 @@ using Pep_On_Wheels.DTO.Product;
 using Pep_On_Wheels.Models;
 using Pep_On_Wheels.Services.Interfaces;
 
-namespace Pep_On_Wheels.Services.Implementations
+namespace Pep_On_Wheels.Services
 {
     public class ProductService : IProductService
     {
@@ -20,43 +20,31 @@ namespace Pep_On_Wheels.Services.Implementations
 
         public async Task<IEnumerable<ProductReadDTO>> GetAllProductsAsync()
         {
-            var products = await _context.Products
-                                         .Include(p => p.ProductImages)
-                                         .Include(p => p.Category)
-                                         .ToListAsync();
-
+            var products = await _context.Products.AsNoTracking().ToListAsync();
             return _mapper.Map<IEnumerable<ProductReadDTO>>(products);
         }
 
         public async Task<ProductReadDTO> GetProductByIdAsync(int id)
         {
-            var product = await _context.Products
-                                        .Include(p => p.ProductImages)
-                                        .Include(p => p.Category)
-                                        .FirstOrDefaultAsync(p => p.Id == id);
-
-            return product == null ? null : _mapper.Map<ProductReadDTO>(product);
-        }
-
-        public async Task<ProductReadDTO> CreateProductAsync(ProductCreateDTO ProductReadDTO)
-        {
-            var product = _mapper.Map<Product>(ProductReadDTO);
-
-            _context.Products.Add(product);
-            await _context.SaveChangesAsync();
-
+            var product = await _context.Products.FindAsync(id);
             return _mapper.Map<ProductReadDTO>(product);
         }
 
-        public async Task<bool> UpdateProductAsync(int id, ProductUpdateDTO ProductReadDTO)
+        public async Task<ProductReadDTO> CreateProductAsync(ProductCreateDTO dto)
         {
-            var existingProduct = await _context.Products.FindAsync(id);
-            if (existingProduct == null) return false;
-
-            _mapper.Map(ProductReadDTO, existingProduct);
-            _context.Products.Update(existingProduct);
+            var product = _mapper.Map<Product>(dto);
+            _context.Products.Add(product);
             await _context.SaveChangesAsync();
+            return _mapper.Map<ProductReadDTO>(product);
+        }
 
+        public async Task<bool> UpdateProductAsync(int id, ProductUpdateDTO dto)
+        {
+            var product = await _context.Products.FindAsync(id);
+            if (product == null) return false;
+
+            _mapper.Map(dto, product);
+            await _context.SaveChangesAsync();
             return true;
         }
 
@@ -67,7 +55,6 @@ namespace Pep_On_Wheels.Services.Implementations
 
             _context.Products.Remove(product);
             await _context.SaveChangesAsync();
-
             return true;
         }
     }
