@@ -24,7 +24,7 @@ namespace Pep_On_Wheels.Services
             return _mapper.Map<IEnumerable<AddressReadDTO>>(addresses);
         }
 
-        public async Task<AddressReadDTO> GetByIdAsync(int id)
+        public async Task<AddressReadDTO> GetByIdAsync(int id)  
         {
             var address = await _context.Addresses.FindAsync(id);
             return _mapper.Map<AddressReadDTO>(address);

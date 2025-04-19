@@ -9,7 +9,7 @@ using Pep_On_Wheels.Services.Interfaces;
 
 namespace Pep_On_Wheels.Services
 {
-    public class CategoryService : ICategryService
+    public class CategoryService : ICategoryService
     {
         private readonly Pep_On_WheelsContext _context;
         private readonly IMapper _mapper;

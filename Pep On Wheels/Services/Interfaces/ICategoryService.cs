@@ -4,7 +4,7 @@ using Pep_On_Wheels.DTO.Category;
 
 namespace Pep_On_Wheels.Services.Interfaces
 {
-    public interface ICategryService
+    public interface ICategoryService
     {
         Task<IEnumerable<CategoryReadDTO>> GetAllAsync();
         Task<CategoryReadDTO> GetByIdAsync(int id);
